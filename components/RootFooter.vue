@@ -2,7 +2,7 @@
   <section class="main-footer">
     <div class="bg-dark" style="margin-top: 2rem;">
       <div class="text-center main-footer__padding">
-        @copyright
+        &copy; Copyright 2023
       </div>
     </div>
   </section>

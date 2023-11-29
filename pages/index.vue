@@ -2,13 +2,34 @@
   <div class="root-wrapper">
     <RootHeader />
     <div class="container" />
+    <ListProductsContainer
+      :products="products"
+    />
     <RootFooter />
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-  name: 'IndexPage'
+  name: 'IndexPage',
+  computed: {
+    products () {
+      return this.$store.state.listProducts
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      if (this.$store.state.listProducts.length === 0) {
+        this.loadProductsAct()
+      }
+    }, 10)
+  },
+  methods: {
+    ...mapActions([
+      'loadProductsAct'
+    ])
+  }
 }
 </script>
 
