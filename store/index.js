@@ -10,14 +10,22 @@ const vuexLocal = new VuexPersistence({
 
 const createStore = () => new Store({
   state: {
-    listProducts: []
+    listProducts: [],
+    filter: {
+      open: false,
+      categories: [],
+      selectCategory: '',
+      currentPage: 1,
+      countProducts: 5,
+      orderBy: 'name'
+    }
   },
   mutations: {
-    getProduct (state) {
-
-    },
     writeProducts (state, payload) {
       state.listProducts = payload.data
+    },
+    writeFilter (state, payload) {
+      state.filter = payload.filter
     }
   },
   actions: {
@@ -25,12 +33,15 @@ const createStore = () => new Store({
       const f = await loadProducts()
       commit('writeProducts', { data: f })
     },
-    async loadProductsLimitAct ({ commit, payload }) {
-      const f = await loadProductsByLimit(payload.limit)
+    async loadProductsLimitAct ({ commit }, { limit }) {
+      const f = await loadProductsByLimit(limit)
       commit('writeProducts', { data: f })
     },
-    async loadProductCategoriesAct ({ commit, payload }) {
-      const f = await loadProductCategories()
+    async loadProductCategoriesAct () {
+      return await loadProductCategories()
+    },
+    async loadProductCategoryAct ({ commit }, { category }) {
+      const f = await loadProductCategory(category)
       commit('writeProducts', { data: f })
     }
   },
@@ -49,6 +60,11 @@ const loadProductsByLimit = async (limit = 5) => {
 
 const loadProductCategories = async () => {
   const response = await axios.get('https://fakestoreapi.com/products/categories')
+  return response.data
+}
+
+const loadProductCategory = async (category) => {
+  const response = await axios.get('https://fakestoreapi.com/products/category/' + category)
   return response.data
 }
 
