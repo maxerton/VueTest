@@ -18,7 +18,9 @@ const createStore = () => new Store({
       currentPage: 1,
       countProducts: 5,
       orderBy: 'name'
-    }
+    },
+    productInfo: {},
+    tileOrList: false
   },
   mutations: {
     writeProducts (state, payload) {
@@ -26,6 +28,12 @@ const createStore = () => new Store({
     },
     writeFilter (state, payload) {
       state.filter = payload.filter
+    },
+    writeProduct (state, payload) {
+      state.productInfo = payload.product
+    },
+    changeTile (state, payload) {
+      state.tileOrList = payload
     }
   },
   actions: {
@@ -43,6 +51,10 @@ const createStore = () => new Store({
     async loadProductCategoryAct ({ commit }, { category }) {
       const f = await loadProductCategory(category)
       commit('writeProducts', { data: f })
+    },
+    async loadProductAct ({ commit }, { id }) {
+      const f = await loadProductById(id)
+      commit('writeProduct', { product: f })
     }
   },
   plugins: [vuexLocal.plugin]
@@ -65,6 +77,11 @@ const loadProductCategories = async () => {
 
 const loadProductCategory = async (category) => {
   const response = await axios.get('https://fakestoreapi.com/products/category/' + category)
+  return response.data
+}
+
+const loadProductById = async (id) => {
+  const response = await axios.get('https://fakestoreapi.com/products/' + id)
   return response.data
 }
 

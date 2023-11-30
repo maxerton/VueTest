@@ -1,9 +1,11 @@
 <template>
-  <div class="card product-card-horizontal mx-2">
+  <div class="card product-card-horizontal mx-2 py-4 px-1">
     <img class="card-img-left custom-img-left" :src="product.image" alt="">
     <div class="card-body" style="width: 75%;">
       <h5 class="card-title text-truncate">
-        {{ product.title }}
+        <a :href="'/product?id=' + product.id" target="_blank">
+          {{ product.title }}
+        </a>
       </h5>
       <p class="card-text text-truncate">
         {{ product.description }}
@@ -22,7 +24,7 @@
         {{ product.category }}
       </p>
 
-      <a href="#" target="_blank" class="btn btn-outline-primary">
+      <a :href="'/product?id=' + product.id" target="_blank" class="btn btn-outline-primary">
         <font-awesome-icon :icon="['fas', 'cart-shopping']" />
       </a>
     </div>

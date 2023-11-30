@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <ListProductFilter :changelt="changeListTile" :tile-or-list="tileOrList" />
+    <ListProductFilter :changelt="changeListTile" />
     <div :class="tileOrList ? 'row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 px-2': ''">
       <div v-for="product in filteredList" :key="product.id" class="mb-3">
         <ListProductItemCard v-if="tileOrList" :product="product" />
@@ -8,7 +8,7 @@
       </div>
     </div>
     <nav>
-      <ul class="pagination">
+      <ul class="pagination justify-content-center">
         <li class="page-item" :class="{ disabled: filter.currentPage <= 1 }">
           <button class="page-link" @click="filter.currentPage--; scrollTop()">
             <font-awesome-icon :icon="['fas', 'chevron-left']" />
@@ -38,9 +38,6 @@ export default {
       required: true
     }
   },
-  data: () => ({
-    tileOrList: false
-  }),
   computed: {
     filteredList: function () {
       const startOffset = (this.filter.currentPage - 1) * this.filter.countProducts
@@ -74,6 +71,9 @@ export default {
     },
     filter () {
       return this.$store.state.filter
+    },
+    tileOrList () {
+      return this.$store.state.tileOrList
     }
   },
   mounted () {

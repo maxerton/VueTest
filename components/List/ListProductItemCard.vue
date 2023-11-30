@@ -3,7 +3,9 @@
     <img class="card-img-top custom-img" :src="product.image" alt="">
     <div class="card-body">
       <h5 class="card-title">
-        {{ truncateString(product.title, 35) }}
+        <a :href="'/product?id=' + product.id" target="_blank">
+          {{ truncateString(product.title, 35) }}
+        </a>
       </h5>
       <p class="card-text">
         {{ truncateString(product.description, 40) }}
@@ -19,7 +21,9 @@
         </div>
       </div>
 
-      <a href="#" target="_blank" class="btn btn-primary">Buy</a>
+      <a :href="'/product?id=' + product.id" target="_blank" class="btn btn-outline-primary">
+        <font-awesome-icon :icon="['fas', 'cart-shopping']" />
+      </a>
     </div>
   </div>
 </template>

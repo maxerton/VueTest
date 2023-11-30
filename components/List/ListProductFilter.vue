@@ -6,10 +6,10 @@
         <font-awesome-icon :icon="['fas', filter.open ? 'caret-up' : 'caret-down']" />
       </b-button>
       <div class="btn-group ml-auto">
-        <button class="btn btn-outline-primary" :class="{'active': !tileOrList}" @click="changelt(false)">
+        <button class="btn btn-outline-primary" :class="{'active': !tileOrList}" @click="changeTile(false)">
           <font-awesome-icon :icon="['fas', 'list']" />
         </button>
-        <button class="btn btn-outline-primary" :class="{'active': tileOrList}" @click="changelt(true)">
+        <button class="btn btn-outline-primary" :class="{'active': tileOrList}" @click="changeTile(true)">
           <font-awesome-icon :icon="['fas', 'border-all']" />
         </button>
       </div>
@@ -60,17 +60,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
-  props: {
-    changelt: {
-      type: Function,
-      required: true
-    },
-    tileOrList: {
-      type: Boolean
-    }
-  },
   data: () => ({
     orders: [
       { name: 'By name', value: 'name' },
@@ -81,6 +72,9 @@ export default {
   computed: {
     filter () {
       return this.$store.state.filter
+    },
+    tileOrList () {
+      return this.$store.state.tileOrList
     }
   },
   methods: {
@@ -97,6 +91,9 @@ export default {
     ...mapActions([
       'loadProductCategoryAct',
       'loadProductsAct'
+    ]),
+    ...mapMutations([
+      'changeTile'
     ])
   }
 }
