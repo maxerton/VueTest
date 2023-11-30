@@ -1,12 +1,12 @@
 <template>
-  <div class="card mx-2" style="max-width: 100%; min-width: 80%; min-height: 30rem;">
-    <img class="card-img-top custom-img" :src="product.image" alt="">
-    <div class="card-body">
-      <h5 class="card-title">
-        {{ truncateString(product.title, 35) }}
+  <div class="card product-card-horizontal mx-2">
+    <img class="card-img-left custom-img-left" :src="product.image" alt="">
+    <div class="card-body" style="width: 75%;">
+      <h5 class="card-title text-truncate">
+        {{ product.title }}
       </h5>
-      <p class="card-text">
-        {{ truncateString(product.description, 40) }}
+      <p class="card-text text-truncate">
+        {{ product.description }}
       </p>
       <div class="d-flex justify-content-between">
         <div>
@@ -18,8 +18,13 @@
           <ListProductItemRating :rating="product.rating" />
         </div>
       </div>
+      <p style="font-size: .8em; color: #00000055;">
+        {{ product.category }}
+      </p>
 
-      <a href="#" target="_blank" class="btn btn-primary">Buy</a>
+      <a href="#" target="_blank" class="btn btn-outline-primary">
+        <font-awesome-icon :icon="['fas', 'cart-shopping']" />
+      </a>
     </div>
   </div>
 </template>
@@ -57,14 +62,24 @@ export default {
 </script>
 
 <style>
-.custom-img {
-  height: 15rem;
+.product-card-horizontal {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.custom-img-left {
+  width: 25%;
+  max-width: 20rem;
+  min-width: 4rem;
+  max-height: 15rem;
   object-fit:contain;
   object-position: center center;
   padding: 0.5rem;
 }
 
 .product-card__price {
-font-size: larger;
+  font-size: larger;
+  font-weight: 500;
 }
 </style>
