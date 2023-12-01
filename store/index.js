@@ -55,6 +55,7 @@ const createStore = () => new Store({
     async loadProductAct ({ commit }, { id }) {
       const f = await loadProductById(id)
       commit('writeProduct', { product: f })
+      return f
     }
   },
   plugins: [vuexLocal.plugin]

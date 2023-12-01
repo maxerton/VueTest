@@ -8,6 +8,9 @@
           <h5 class="card-title">
             {{ product.title }}
           </h5>
+          <p style="color: #aaa; opacity: .6;">
+            {{ product.category }}
+          </p>
           <p class="card-text">
             {{ product.description }}
           </p>
@@ -31,23 +34,26 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
+  data: () => ({
+    product: {}
+  }),
   computed: {
     getId: () => {
       const uri = window.location.search.substring(1)
       const params = new URLSearchParams(uri)
       return params.get('id')
-    },
-    product () {
-      const h = this.$store.state.productInfo
-      return h
     }
   },
   mounted () {
+    // const t = this
     setTimeout(() => {
-      this.loadProductAct({
+      const h = this.loadProductAct({
         id: this.getId
       })
-    }, 10)
+      h.then((resp) => {
+        this.$data.product = resp
+      })
+    }, 0)
   },
   methods: {
     ...mapActions([
